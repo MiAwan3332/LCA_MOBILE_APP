@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import './forgetpassword_screen.dart';
-import './dashboard_screen.dart';
+import 'package:flutter/widgets.dart';
+import 'forgetpassword_screen.dart';
+import 'dashboard_screen.dart';
+import '../../services/auth_services.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -9,6 +11,9 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   bool _passwordVisible = false;
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  UserAuth _authServices = UserAuth();
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +29,7 @@ class _SignInScreenState extends State<SignInScreen> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
               child: TextFormField(
+                controller: _emailController,
                 decoration: InputDecoration(
                   labelText: 'Email',
                   border: OutlineInputBorder(),
@@ -33,6 +39,7 @@ class _SignInScreenState extends State<SignInScreen> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
               child: TextFormField(
+                controller: _passwordController,
                 obscureText: !_passwordVisible,
                 decoration: InputDecoration(
                   labelText: 'Password',
@@ -71,10 +78,8 @@ class _SignInScreenState extends State<SignInScreen> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) =>  DashboardScreen()),
-                  );
+                  _authServices.loginUser(_emailController.text, _passwordController.text, context);
+                 
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFFBA8E4F), // Change background color here
