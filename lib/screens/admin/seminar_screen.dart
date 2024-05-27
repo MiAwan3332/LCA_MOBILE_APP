@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'qrscanner_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import './seminarform_screen.dart';
 
 class SeminarScreen extends StatefulWidget {
   @override
@@ -81,8 +82,13 @@ class _SeminarScreenState extends State<SeminarScreen> {
                 title: Text(seminar['name'] ?? ''),
                 subtitle: Text(seminar['email'] ?? ''),
                 onTap: () {
-                  print(seminar['_id']);
-                  // _openQRScanner(seminar['name'] ?? '');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          SeminarFormScreen(seminarId: seminar['_id']),
+                    ),
+                  );
                 },
               ),
             );
