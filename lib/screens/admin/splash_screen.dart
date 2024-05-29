@@ -19,8 +19,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override 
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // This method will be called when the dependencies of the widget changed, including the context
-    // You can use context here
   }
 
   @override 

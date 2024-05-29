@@ -11,6 +11,7 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   bool _passwordVisible = false;
+  bool _isLoading = false;
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   UserAuth _authServices = UserAuth();
@@ -63,37 +64,46 @@ class _SignInScreenState extends State<SignInScreen> {
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () {
-                     Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) =>  ForgetPasswordScreen()),
-                  );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ForgetPasswordScreen()),
+                    );
                   },
                   child: Text('Forgot Password?', style: TextStyle(color: Colors.black),),
                 ),
               ),
             ),
             Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-            child: SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  _authServices.loginUser(_emailController.text, _passwordController.text, context);
-                 
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFBA8E4F), // Change background color here
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0), // Change border radius here
+              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: _isLoading ? null : () async {
+                    setState(() {
+                      _isLoading = true;
+                    });
+                    await _authServices.loginUser(_emailController.text, _passwordController.text, context);
+                    setState(() {
+                      _isLoading = false;
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFFBA8E4F), // Change background color here
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0), // Change border radius here
+                    ),
                   ),
-                ),
-                child: Text(
-                  'Sign In',
-                  style: TextStyle(color: Colors.white),
+                  child: _isLoading
+                      ? CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFBA8E4F)),
+                        )
+                      : Text(
+                          'Sign In',
+                          style: TextStyle(color: Colors.white)),
+                        ),
                 ),
               ),
-            ),
-          ),
+            
           ],
         ),
       ),
