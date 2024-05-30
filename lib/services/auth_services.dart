@@ -2,10 +2,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lca_app/screens/student/student_dashboard_screen.dart';
+import 'package:lca_app/screens/student/student_info_form_screen.dart';
+import 'package:lca_app/services/student_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/admin/dashboard_screen.dart';
 
 class UserAuth {
+   final Student _student = Student();
+
   Future<void> loginUser(
       String email, String password, BuildContext context) async {
     final url = Uri.parse('https://lca-system-backend.vercel.app/users/login');
@@ -41,14 +45,9 @@ class UserAuth {
             MaterialPageRoute(builder: (context) => DashboardScreen()),
           );
         } else if (role == 'student') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => StudentDashboardScreen()),
-          );
+          _student.checkFormStatus(token, studentId, context);
+
         }
-        // print('Response data: $token');
-        // SharedPreferences prefs = await SharedPreferences.getInstance();
-        // await prefs.setString('token', json.encode(token));
 
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Login successful')));

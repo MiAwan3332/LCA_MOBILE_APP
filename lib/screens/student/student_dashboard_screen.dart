@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lca_app/change_password_screen.dart';
+import 'package:lca_app/screens/student/subjects_screen.dart';
 import 'package:lca_app/signin_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../admin/seminar_screen.dart';
@@ -56,7 +57,7 @@ class StudentDashboardScreen extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SeminarScreen()),
+                  MaterialPageRoute(builder: (context) => SubjectsScreen()),
                 );
               },
               child: Card(
@@ -87,10 +88,10 @@ class StudentDashboardScreen extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => QRScannerScreen()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => QRScannerScreen()),
+                // );
               },
               child: Card(
                 elevation: 5,

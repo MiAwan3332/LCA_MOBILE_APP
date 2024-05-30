@@ -11,7 +11,7 @@ class SubjectsScreen extends StatefulWidget {
 }
 
 class _SubjectsScreenState extends State<SubjectsScreen> {
-  List<dynamic> seminars = [];
+  List<dynamic> courses = [];
 
   @override
   void initState() {
@@ -21,15 +21,14 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
 
   Future<void> fetchData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? authToken = prefs.getString('token');
+    String? studentId = prefs.getString('studentId');
 
-    final String apiUrl = 'https://lca-system-backend.vercel.app/seminars';
+    final String apiUrl = 'https://lca-system-backend.vercel.app/courses/student/courses/${studentId}';
 
     try {
       final response = await http.get(
         Uri.parse(apiUrl),
         headers: {
-          'Authorization': 'Bearer $authToken', 
           'Content-Type': 'application/json',
         },
       );
@@ -37,7 +36,7 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         setState(() {
-          seminars = responseData; 
+          courses = responseData['courses']; 
         });
       } else {
         print('Request failed with status: ${response.statusCode}');
@@ -48,41 +47,33 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
     }
   }
 
-  void _openQRScanner(String seminarName) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => QRScannerScreen(),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     // print(seminars);
     return Scaffold(
       appBar: AppBar(
-        title: Text('List of Seminars'),
+        title: Text('List of Subjects'),
         backgroundColor: Color(0xFFBA8E4F),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: ListView.builder(
-          itemCount: seminars.length,
+          itemCount: courses.length,
           itemBuilder: (context, index) {
-            final seminar = seminars[index];
+            final seminar = courses[index];
             return Card(
               child: ListTile(
+                splashColor: Color(0xFFBA8E4F),
                 title: Text(seminar['name'] ?? ''),
-                subtitle: Text(seminar['email'] ?? ''),
+                subtitle: Text(seminar['description'] ?? ''),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          SeminarFormScreen(seminarId: seminar['_id']),
-                    ),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) =>
+                  //         SeminarFormScreen(seminarId: seminar['_id']),
+                  //   ),
+                  // );
                 },
               ),
             );
