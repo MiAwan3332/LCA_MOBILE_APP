@@ -8,7 +8,6 @@ import '../screens/admin/dashboard_screen.dart';
 class Seminar {
   Future<void> addUserToSeminar(
       String name,
-      String email,
       String contactNo,
       String city,
       String seminarId,
@@ -31,7 +30,6 @@ class Seminar {
 
     Map<String, dynamic> body = {
       'name': name,
-      'email': email,
       'contactNo': contactNo,
       'city': city,
       'qualification': qualification,

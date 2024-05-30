@@ -11,7 +11,7 @@ class SeminarFormScreen extends StatefulWidget {
 
 class _SeminarFormScreenState extends State<SeminarFormScreen> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController();
+  // final TextEditingController _emailController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _contactController = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
@@ -37,21 +37,21 @@ class _SeminarFormScreenState extends State<SeminarFormScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextFormField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: 16.0),
+                // TextFormField(
+                //   controller: _emailController,
+                //   decoration: InputDecoration(
+                //     labelText: 'Email',
+                //     border: OutlineInputBorder(),
+                //   ),
+                //   keyboardType: TextInputType.emailAddress,
+                //   validator: (value) {
+                //     if (value == null || value.isEmpty) {
+                //       return 'Please enter your email';
+                //     }
+                //     return null;
+                //   },
+                // ),
+                // SizedBox(height: 16.0),
                 TextFormField(
                   controller: _nameController,
                   decoration: InputDecoration(
@@ -159,7 +159,7 @@ class _SeminarFormScreenState extends State<SeminarFormScreen> {
                     child: ElevatedButton(
                       onPressed: () {
                         print(widget.seminarId);
-                        _seminar.addUserToSeminar(_nameController.text, _emailController.text, _contactController.text, _cityController.text, widget.seminarId, _qualificationController.text, context);
+                        _seminar.addUserToSeminar(_nameController.text, _contactController.text, _cityController.text, widget.seminarId, _qualificationController.text, context);
                         // if (_formKey.currentState?.validate() ?? false) {
                         //   ScaffoldMessenger.of(context).showSnackBar(
                         //     SnackBar(content: Text('Form submitted successfully')),

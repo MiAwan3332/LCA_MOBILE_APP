@@ -57,7 +57,7 @@ class DashboardScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        'Attandace',
+                        'Attendance',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
