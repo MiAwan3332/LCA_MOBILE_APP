@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'forgetpassword_screen.dart';
-import 'dashboard_screen.dart';
-import '../../services/auth_services.dart';
+import 'screens/admin/dashboard_screen.dart';
+import 'services/auth_services.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
