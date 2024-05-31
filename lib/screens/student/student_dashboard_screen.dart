@@ -4,8 +4,10 @@ import 'package:lca_app/screens/student/student_profile_screen.dart';
 import 'package:lca_app/screens/student/subjects_screen.dart';
 import 'package:lca_app/signin_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../admin/seminar_screen.dart';
-import '../admin/qrscanner_screen.dart';
+// import '../admin/seminar_screen.dart';
+// import '../admin/qrscanner_screen.dart';
+import './student_time_table_screen.dart';
+
 
 class StudentDashboardScreen extends StatelessWidget {
   @override
@@ -115,6 +117,39 @@ class StudentDashboardScreen extends StatelessWidget {
                       SizedBox(height: 10),
                       Text(
                         'Attendance',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+             InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => StudentTimeTableScreen()),
+                );
+              },
+              child: Card(
+                elevation: 5,
+                child: Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.event_note,
+                        size: 50,
+                        color: Colors.purple,
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Time Table',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,

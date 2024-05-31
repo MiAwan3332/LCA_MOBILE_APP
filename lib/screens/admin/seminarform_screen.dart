@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lca_app/services/generic_services.dart';
 import '../../services/seminar_services.dart';
 
-
 class SeminarFormScreen extends StatefulWidget {
-   final String seminarId;
-  const SeminarFormScreen({Key? key, required this.seminarId}) : super(key: key);
+  final String seminarId;
+  const SeminarFormScreen({Key? key, required this.seminarId})
+      : super(key: key);
   @override
   _SeminarFormScreenState createState() => _SeminarFormScreenState();
 }
@@ -15,8 +16,10 @@ class _SeminarFormScreenState extends State<SeminarFormScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _contactController = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
-  final TextEditingController _qualificationController = TextEditingController();
+  final TextEditingController _qualificationController =
+      TextEditingController();
   final Seminar _seminar = Seminar();
+  GenericServices _genericServices = GenericServices();
 
   bool _cssSeminar = false;
   bool _pmsSeminar = false;
@@ -153,20 +156,60 @@ class _SeminarFormScreenState extends State<SeminarFormScreen> {
                 ),
                 SizedBox(height: 20),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                   child: SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        _seminar.addUserToSeminar(_nameController.text, _contactController.text, _cityController.text, widget.seminarId, _qualificationController.text, context);
-                        _nameController.text = '';
-                        _contactController.text = '';
-                        _cityController.text = '';
-                        _qualificationController.text = '';
-                        _cssSeminar = false;
-                        _pmsSeminar = false;
-                        _trialClasses = false;
-                        _allOfAbove = false;
+                        if (_nameController.text.isEmpty) {
+                          _genericServices.showCustomToast(
+                              'Name should not be empty', Colors.red);
+                          return;
+                        } else if (_contactController.text.isEmpty) {
+                          _genericServices.showCustomToast(
+                              'Name should not be empty', Colors.red);
+                        } else {
+                          List<String> selectedSeminars = [];
+                          if (_allOfAbove) {
+                            selectedSeminars.addAll([
+                              'CSS Seminar',
+                              'PMS Seminar',
+                              'Trial Classes'
+                            ]);
+                          } else {
+                            if (_cssSeminar)
+                              selectedSeminars.add('CSS Seminar');
+                            if (_pmsSeminar)
+                              selectedSeminars.add('PMS Seminar');
+                            if (_trialClasses)
+                              selectedSeminars.add('Trial Classes');
+                          }
+                          _seminar.addUserToSeminar(
+                              _nameController.text,
+                              _contactController.text,
+                              _cityController.text,
+                              widget.seminarId,
+                              _qualificationController.text,
+                              context,
+                              selectedSeminars);
+                          _nameController.clear();
+                          _contactController.clear();
+                          _cityController.clear();
+                          _qualificationController.clear();
+                          setState(() {
+                            _cssSeminar = false;
+                            _pmsSeminar = false;
+                            _trialClasses = false;
+                            _allOfAbove = false;
+                          });
+                        }
+
+                        // if (_formKey.currentState?.validate() ?? false) {
+                        //   ScaffoldMessenger.of(context).showSnackBar(
+                        //     SnackBar(content: Text('Form submitted successfully')),
+                        //   );
+                        // }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFFBA8E4F),

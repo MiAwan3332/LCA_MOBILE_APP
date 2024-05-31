@@ -12,7 +12,8 @@ class Seminar {
       String city,
       String seminarId,
       String qualification,
-      BuildContext context) async {
+      BuildContext context,
+      List<String> selectedSeminars) async {
         
     final url = Uri.parse('https://lca-system-backend.vercel.app/attendees/add');
     print(seminarId);
@@ -30,10 +31,10 @@ class Seminar {
 
     Map<String, dynamic> body = {
       'name': name,
-      'contactNo': contactNo,
+      'phone': contactNo,
       'city': city,
       'qualification': qualification,
-      'attend_type': 'abc',
+      'attend_type': selectedSeminars,
       'seminar_id': seminarId,
     };
 
