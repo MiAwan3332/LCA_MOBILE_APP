@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/admin/dashboard_screen.dart';
 
 class UserAuth {
-   final Student _student = Student();
+  final Student _student = Student();
 
   Future<void> loginUser(
       String email, String password, BuildContext context) async {
@@ -34,9 +34,7 @@ class UserAuth {
 
         SharedPreferences prefs = await SharedPreferences.getInstance();
         String token = responseData['authToken'];
-        String studentId = responseData['studentId'];
         await prefs.setString('token', token);
-        await prefs.setString('studentId', studentId);
         String role = responseData['role'];
 
         if (role == 'admin') {
@@ -45,8 +43,9 @@ class UserAuth {
             MaterialPageRoute(builder: (context) => DashboardScreen()),
           );
         } else if (role == 'student') {
+          String studentId = responseData['studentId'];
+          await prefs.setString('studentId', studentId);
           _student.checkFormStatus(token, studentId, context);
-
         }
 
         ScaffoldMessenger.of(context)
@@ -65,13 +64,10 @@ class UserAuth {
     }
   }
 
-  Future<void> changePassword(
-      String email,
-      String currentPassword,
-      String newPassword,
-      BuildContext context) async {
-        
-    final url = Uri.parse('https://lca-system-backend.vercel.app/users/changePassword');
+  Future<void> changePassword(String email, String currentPassword,
+      String newPassword, BuildContext context) async {
+    final url =
+        Uri.parse('https://lca-system-backend.vercel.app/users/changePassword');
 
     // Retrieve token from SharedPreferences
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -102,8 +98,7 @@ class UserAuth {
       final response = await http.post(url, headers: headers, body: jsonBody);
 
       if (response.statusCode == 200) {
-        var responseData = json.decode(response.body);       
-                
+        var responseData = json.decode(response.body);
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Password Reset Successfully')),
@@ -114,7 +109,9 @@ class UserAuth {
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to change password: ${response.reasonPhrase}')),
+          SnackBar(
+              content:
+                  Text('Failed to change password: ${response.reasonPhrase}')),
         );
       }
     } catch (e) {
@@ -125,11 +122,9 @@ class UserAuth {
     }
   }
 
-  Future<void> forgotPassword(
-      String email,
-      BuildContext context) async {
-        
-    final url = Uri.parse('https://lca-system-backend.vercel.app/users/forgotPassword');
+  Future<void> forgotPassword(String email, BuildContext context) async {
+    final url =
+        Uri.parse('https://lca-system-backend.vercel.app/users/forgotPassword');
 
     Map<String, dynamic> body = {
       'email': email,
@@ -146,8 +141,7 @@ class UserAuth {
       final response = await http.post(url, headers: headers, body: jsonBody);
 
       if (response.statusCode == 200) {
-        var responseData = json.decode(response.body);       
-                
+        var responseData = json.decode(response.body);
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Password Sent Successfully')),
@@ -158,7 +152,9 @@ class UserAuth {
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to send password: ${response.reasonPhrase}')),
+          SnackBar(
+              content:
+                  Text('Failed to send password: ${response.reasonPhrase}')),
         );
       }
     } catch (e) {
