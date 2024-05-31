@@ -158,14 +158,15 @@ class _SeminarFormScreenState extends State<SeminarFormScreen> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        print(widget.seminarId);
                         _seminar.addUserToSeminar(_nameController.text, _contactController.text, _cityController.text, widget.seminarId, _qualificationController.text, context);
-                        // if (_formKey.currentState?.validate() ?? false) {
-                        //   ScaffoldMessenger.of(context).showSnackBar(
-                        //     SnackBar(content: Text('Form submitted successfully')),
-                        //   );
-                        // }
-
+                        _nameController.text = '';
+                        _contactController.text = '';
+                        _cityController.text = '';
+                        _qualificationController.text = '';
+                        _cssSeminar = false;
+                        _pmsSeminar = false;
+                        _trialClasses = false;
+                        _allOfAbove = false;
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFFBA8E4F),

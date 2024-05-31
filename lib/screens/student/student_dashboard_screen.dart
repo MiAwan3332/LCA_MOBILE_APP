@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lca_app/change_password_screen.dart';
+import 'package:lca_app/screens/student/student_profile_screen.dart';
 import 'package:lca_app/screens/student/subjects_screen.dart';
 import 'package:lca_app/signin_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,10 +33,15 @@ class StudentDashboardScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (context) => ChangePasswordScreen()),
               );
+            } else if (value == 'profile') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => StudentProfileScreen()),
+              );
             }
           },
           itemBuilder: (BuildContext context) {
-            return {'Logout', 'Change Password'}.map((String choice) {
+            return {'Logout', 'Change Password', 'Profile'}.map((String choice) {
               return PopupMenuItem<String>(
                 value: choice.toLowerCase().replaceAll(' ', '_'),
                 child: Text(choice),

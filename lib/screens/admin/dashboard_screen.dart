@@ -33,7 +33,7 @@ class DashboardScreen extends StatelessWidget {
                   MaterialPageRoute(
                       builder: (context) => ChangePasswordScreen()),
                 );
-              }
+              } 
             },
             itemBuilder: (BuildContext context) {
               return {'Logout', 'Change Password'}.map((String choice) {
