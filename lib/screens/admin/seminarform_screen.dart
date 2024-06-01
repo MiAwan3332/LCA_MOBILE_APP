@@ -54,7 +54,7 @@ class _SeminarFormScreenState extends State<SeminarFormScreen> {
                 //     return null;
                 //   },
                 // ),
-                // SizedBox(height: 16.0),
+                SizedBox(height: 16.0),
                 TextFormField(
                   controller: _nameController,
                   decoration: InputDecoration(
@@ -168,7 +168,7 @@ class _SeminarFormScreenState extends State<SeminarFormScreen> {
                           return;
                         } else if (_contactController.text.isEmpty) {
                           _genericServices.showCustomToast(
-                              'Name should not be empty', Colors.red);
+                              'Contact no. should not be empty', Colors.red);
                         } else {
                           List<String> selectedSeminars = [];
                           if (_allOfAbove) {

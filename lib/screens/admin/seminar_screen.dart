@@ -69,7 +69,7 @@ class _SeminarScreenState extends State<SeminarScreen> {
     // print(seminars);
     return Scaffold(
       appBar: AppBar(
-        title: Text('List of Seminars'),
+        title: Text('List of Seminars', style: TextStyle(color: Colors.white),),
         backgroundColor: Color(0xFFBA8E4F),
       ),
       body: Padding(

@@ -1,11 +1,9 @@
 import 'dart:math';
-
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; // Ensure this is imported for Color and other material components
 import 'package:time_planner/time_planner.dart';
 
 class MyCustomScrollBehavior extends MaterialScrollBehavior {
-  // Override behavior methods and getters like dragDevices
   @override
   Set<PointerDeviceKind> get dragDevices => {
         PointerDeviceKind.touch,
@@ -19,13 +17,13 @@ class StudentTimeTableScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Time planner Demo',
+      title: 'Time Planner Demo',
       scrollBehavior: MyCustomScrollBehavior(),
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const MyHomePage(title: 'Time planner'),
+      home: const MyHomePage(title: 'Time Planner'),
     );
   }
 }
@@ -49,34 +47,51 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _generateStaticTasks() {
-    // Add predefined tasks with specific colors
-    tasks.add(
-      TimePlannerTask(
+    List<Task> myTasks = [
+      Task(
         color: Colors.blue,
-        dateTime: TimePlannerDateTime(day: 0, hour: 8, minutes: 0),
+        day: 0,
+        hour: 8,
+        minutes: 0,
         minutesDuration: 60,
         daysDuration: 1,
-        child: Container(
-          width: double.infinity,
-          height: 40,
-          color: Colors.blue,
-        ),
+        description: 'abc',
       ),
-    );
-    tasks.add(
-      TimePlannerTask(
+      Task(
         color: Colors.green,
-        dateTime: TimePlannerDateTime(day: 2, hour: 12, minutes: 0),
+        day: 2,
+        hour: 12,
+        minutes: 0,
         minutesDuration: 90,
         daysDuration: 2,
-        child: Container(
-          width: double.infinity,
-          height: 40,
-          color: Colors.green,
-        ),
+        description: 'Meeting',
       ),
-    );
-    // Add more predefined tasks if needed
+    ];
+    _generateTasks(myTasks);
+  }
+
+  void _generateTasks(List<Task> tasksData) {
+    tasks.clear();
+    for (var taskData in tasksData) {
+      tasks.add(
+        TimePlannerTask(
+          color: taskData.color,
+          dateTime: TimePlannerDateTime(
+            day: taskData.day,
+            hour: taskData.hour,
+            minutes: taskData.minutes,
+          ),
+          minutesDuration: taskData.minutesDuration,
+          daysDuration: taskData.daysDuration,
+          child: Container(
+            width: double.infinity,
+            height: 40,
+            color: taskData.color,
+            child: Text(taskData.description ?? ''),
+          ),
+        ),
+      );
+    }
   }
 
   void _addRandomTask(BuildContext context) {
@@ -131,8 +146,6 @@ class _MyHomePageState extends State<MyHomePage> {
           use24HourFormat: false,
           setTimeOnAxis: false,
           style: TimePlannerStyle(
-            // cellHeight: 60,
-            // cellWidth: 60,
             showScrollBar: true,
             interstitialEvenColor: Colors.grey[50],
             interstitialOddColor: Colors.grey[200],
@@ -170,4 +183,24 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+}
+
+class Task {
+  final Color color;
+  final int day;
+  final int hour;
+  final int minutes;
+  final int minutesDuration;
+  final int daysDuration;
+  final String? description;
+
+  Task({
+    required this.color,
+    required this.day,
+    required this.hour,
+    required this.minutes,
+    required this.minutesDuration,
+    required this.daysDuration,
+    this.description,
+  });
 }
