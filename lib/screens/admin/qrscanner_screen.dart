@@ -42,6 +42,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
     } else {
       _genericServices.showCustomToast('Error occurred', Colors.red);
     }
+
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -74,7 +75,8 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
                             ),
                           ),
                           child: const Text('Pause',
-                              style: TextStyle(fontSize: 10,color: Colors.white)),
+                              style:
+                                  TextStyle(fontSize: 10, color: Colors.white)),
                         ),
                       ),
                       Container(
@@ -93,7 +95,8 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
                             ),
                           ),
                           child: const Text('Resume',
-                              style: TextStyle(fontSize: 10,color: Colors.white)),
+                              style:
+                                  TextStyle(fontSize: 10, color: Colors.white)),
                         ),
                       ),
                     ],

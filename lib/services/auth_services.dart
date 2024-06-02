@@ -36,6 +36,9 @@ class UserAuth {
         String token = responseData['authToken'];
         await prefs.setString('token', token);
         String role = responseData['role'];
+        await prefs.setString('role', role);
+        await prefs.setInt(
+            'timestamp_role', DateTime.now().millisecondsSinceEpoch);
 
         if (role == 'admin') {
           Navigator.push(
@@ -46,11 +49,12 @@ class UserAuth {
           String studentId = responseData['studentId'];
           await prefs.setString('studentId', studentId);
           _student.checkFormStatus(token, studentId, context);
-        }
-        Navigator.push(
+          Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => StudentDashboardScreen()),
           );
+        }
+
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Login successful')));
       } else if (response.statusCode == 200) {
