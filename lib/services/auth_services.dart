@@ -47,7 +47,10 @@ class UserAuth {
           await prefs.setString('studentId', studentId);
           _student.checkFormStatus(token, studentId, context);
         }
-
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => StudentDashboardScreen()),
+          );
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Login successful')));
       } else if (response.statusCode == 200) {
