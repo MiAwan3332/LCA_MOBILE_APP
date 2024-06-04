@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../change_password_screen.dart';
 import 'seminar_screen.dart';
 import './qrscanner_screen.dart';
+import './admin_time_table_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   @override
@@ -112,6 +113,39 @@ class DashboardScreen extends StatelessWidget {
                         SizedBox(height: 10),
                         Text(
                           'Seminars',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TimetableScreen()),
+                  );
+                },
+                child: Card(
+                  elevation: 5,
+                  child: Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                             Icons.event_note,
+                          size: 50,
+                          color: Colors.purple,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Time Table',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
