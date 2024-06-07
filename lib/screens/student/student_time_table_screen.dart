@@ -11,7 +11,7 @@ class StudentTimeTableScreen extends StatefulWidget {
 }
 
 class _TimetableScreenState extends State<StudentTimeTableScreen> {
-  late Future<Timetable> futureTimetable;
+  late Future<List<Timetable>> futureTimetable;
   String? studentId;
 
   getdatafromsharedpreference() async {
@@ -25,7 +25,7 @@ class _TimetableScreenState extends State<StudentTimeTableScreen> {
   void initState() {
     super.initState();
     getdatafromsharedpreference();
-    futureTimetable = TimeTableServices().fetchStudentTimetableById(studentId);
+    futureTimetable = TimeTableServices.fetchStudentTimetableById(studentId);
   
   }
 
@@ -43,7 +43,7 @@ class _TimetableScreenState extends State<StudentTimeTableScreen> {
         title: Text('Student Timetable', style: TextStyle(color: Colors.white),),
 
       ),
-      body: FutureBuilder<Timetable>(
+      body: FutureBuilder<List<Timetable>>(
         future: futureTimetable,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -53,7 +53,7 @@ class _TimetableScreenState extends State<StudentTimeTableScreen> {
           } else if (!snapshot.hasData) {
             return Center(child: Text('No data available'));
           } else {
-            Timetable timetable = snapshot.data!;
+            Timetable timetable = snapshot.data![0];
             return ListView(
               children: [
                 ListTile(
