@@ -71,6 +71,7 @@ class _SeminarScreenState extends State<SeminarScreen> {
       appBar: AppBar(
         title: Text('List of Seminars', style: TextStyle(color: Colors.white),),
         backgroundColor: Color(0xFFBA8E4F),
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -79,6 +80,7 @@ class _SeminarScreenState extends State<SeminarScreen> {
           itemBuilder: (context, index) {
             final seminar = seminars[index];
             return Card(
+              color: Color.fromARGB(255, 255, 226, 186),
               child: ListTile(
                 title: Text(seminar['name'] ?? ''),
                 subtitle: Text(seminar['email'] ?? ''),

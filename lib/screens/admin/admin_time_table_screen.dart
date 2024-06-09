@@ -26,6 +26,7 @@ class _TimetableScreenState extends State<TimetableScreen> {
           'Timetable',
           style: TextStyle(color: Colors.white),
         ),
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       body: FutureBuilder<List<Timetable>>(
         future: futureTimetable,

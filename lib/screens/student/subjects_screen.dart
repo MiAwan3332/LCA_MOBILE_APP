@@ -52,8 +52,9 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
     // print(seminars);
     return Scaffold(
       appBar: AppBar(
-        title: Text('List of Subjects'),
+        title: Text('List of Subjects', style: TextStyle(color: Colors.white)),
         backgroundColor: Color(0xFFBA8E4F),
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -62,6 +63,7 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
           itemBuilder: (context, index) {
             final seminar = courses[index];
             return Card(
+               color: Color.fromARGB(255, 255, 226, 186),
               child: ListTile(
                 splashColor: Color(0xFFBA8E4F),
                 title: Text(seminar['name'] ?? ''),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../services/time_table_services.dart';
-// import 'timetable_service.dart';
-// import 'timetable_model.dart';
 import '../../models/time_table_model.dart';
 
 class StudentTimeTableScreen extends StatefulWidget {
@@ -11,39 +9,37 @@ class StudentTimeTableScreen extends StatefulWidget {
 }
 
 class _TimetableScreenState extends State<StudentTimeTableScreen> {
-  late Future<List<Timetable>> futureTimetable;
-  String? studentId;
+  Future<Timetable>? futureTimetable;
 
-  getdatafromsharedpreference() async {
-       SharedPreferences prefs = await SharedPreferences.getInstance();
-    studentId = prefs.getString('studentId');
-    setState(() {
-      studentId = studentId;
-    });
-  }
   @override
   void initState() {
     super.initState();
     getdatafromsharedpreference();
-    futureTimetable = TimeTableServices.fetchStudentTimetableById(studentId);
-  
   }
 
+  Future<void> getdatafromsharedpreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? studentId = prefs.getString('studentId');
+    if (studentId != null) {
+      setState(() {
+        futureTimetable = TimeTableServices().fetchStudentTimetableById(studentId);
+      });
+    } else {
+      setState(() {
+        futureTimetable = Future.error('No student ID found in shared preferences');
+      });
+    }
+  }
 
-  
-
-    
   @override
   Widget build(BuildContext context) {
-
-         
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFFBA8E4F),
-        title: Text('Student Timetable', style: TextStyle(color: Colors.white),),
-
+        title: Text('Student Timetable', style: TextStyle(color: Colors.white)),
+        iconTheme: IconThemeData(color: Colors.white),
       ),
-      body: FutureBuilder<List<Timetable>>(
+      body: FutureBuilder<Timetable>(
         future: futureTimetable,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -53,24 +49,31 @@ class _TimetableScreenState extends State<StudentTimeTableScreen> {
           } else if (!snapshot.hasData) {
             return Center(child: Text('No data available'));
           } else {
-            Timetable timetable = snapshot.data![0];
+            Timetable timetable = snapshot.data!;
             return ListView(
               children: [
-                ListTile(
-                  title: Text(timetable.course.name),
-                  subtitle: Text('${timetable.day} ${timetable.startTime} - ${timetable.endTime}'),
-                ),
-                ListTile(
-                  title: Text(timetable.teacher.name),
-                  subtitle: Text(timetable.teacher.email),
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(timetable.teacher.image),
+                //  ListTile(
+                //   title: Text(timetable.teacher.name),
+                //   subtitle: Text(timetable.teacher.email),
+                //   leading: CircleAvatar(
+                //     backgroundImage: NetworkImage(timetable.teacher.image),
+                //   ),
+                // ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    color: Color.fromARGB(255, 255, 226, 186),
+                    child: ListTile(
+                      title: Text(timetable.course.name),
+                      subtitle: Text('${timetable.day} ${timetable.startTime} - ${timetable.endTime}'),
+                    ),
                   ),
                 ),
-                ListTile(
-                  title: Text('Batch: ${timetable.batch.name}'),
-                  subtitle: Text(timetable.batch.description),
-                ),
+               
+                // ListTile(
+                //   title: Text('Batch: ${timetable.batch.name}'),
+                //   subtitle: Text(timetable.batch.description),
+                // ),
               ],
             );
           }
