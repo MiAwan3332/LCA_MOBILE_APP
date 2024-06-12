@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:lca_app/change_password_screen.dart';
 import 'package:lca_app/screens/student/student_profile_screen.dart';
@@ -7,13 +9,28 @@ import 'package:shared_preferences/shared_preferences.dart';
 // import '../admin/seminar_screen.dart';
 // import '../admin/qrscanner_screen.dart';
 import './student_time_table_screen.dart';
+import '../../services/generic_services.dart';
 
 
 class StudentDashboardScreen extends StatelessWidget {
+  DateTime? currentBackPressTime;
+    GenericServices _genericServices = GenericServices();
+
+    Future<bool> onWillPop() async {
+      DateTime now = DateTime.now();
+      if (currentBackPressTime == null ||
+          now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
+        currentBackPressTime = now;
+        _genericServices.showCustomToast('Press again to exit', Colors.black);
+        return Future.value(false);
+      }
+      exit(0);
+    }
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop:false,
+    // ignore: deprecated_member_use
+    return WillPopScope(
+      onWillPop: onWillPop,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xFFBA8E4F),

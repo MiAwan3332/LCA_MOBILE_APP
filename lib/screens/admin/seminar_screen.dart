@@ -46,8 +46,8 @@ class _SeminarScreenState extends State<SeminarScreen> {
         });
       } else {
         // Request failed with non-200 status code
-        print('Request failed with status: ${response.statusCode}');
-        print('Response: ${response.body}');
+        // print('Request failed with status: ${response.statusCode}');
+        // print('Response: ${response.body}');
       }
     } catch (error) {
       // Error occurred during the request
