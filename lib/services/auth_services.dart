@@ -39,19 +39,20 @@ class UserAuth {
         await prefs.setString('role', role);
         await prefs.setInt(
             'timestamp_role', DateTime.now().millisecondsSinceEpoch);
+            print(responseData['role']);
 
-        if (role == 'admin') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => DashboardScreen()),
-          );
-        } else if (role == 'student') {
-          String studentId = responseData['studentId'];
+        if (role == 'student') {
+            String studentId = responseData['studentId'];
           await prefs.setString('studentId', studentId);
           _student.checkFormStatus(token, studentId, context);
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => StudentDashboardScreen()),
+          );
+        } else {
+         Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => DashboardScreen()),
           );
         }
 
