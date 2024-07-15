@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:lca_app/change_password_screen.dart';
+import 'package:lca_app/screens/student/student_attendance_screen.dart';
 import 'package:lca_app/screens/student/student_profile_screen.dart';
 import 'package:lca_app/screens/student/subjects_screen.dart';
 import 'package:lca_app/signin_screen.dart';
@@ -115,10 +116,10 @@ class StudentDashboardScreen extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => QRScannerScreen()),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => StudentAttendanceScreen()),
+                  );
                 },
                 child: Card(
                   elevation: 5,

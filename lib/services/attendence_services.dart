@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:lca_app/models/student_attendance_model.dart';
 import './../services/generic_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,7 +14,7 @@ class AttendenceServices{
     final url = Uri.parse('https://lca-system-backend.vercel.app/attendence/create');
 
     Map<String, dynamic> body = {
-      'student_id': studentId
+      'student_id': '665b9fae69f73f899ad7b862'
     };
 
     String jsonBody = json.encode(body);
@@ -44,4 +45,23 @@ class AttendenceServices{
       _genericServices.showCustomToast('An error occurred: $e', Colors.red);
     }
   }
+
+  Future<List<Attendance>> fetchStudentAttendanceById(String studentId) async {
+  String url =
+      'https://lca-system-backend.vercel.app/timetable/get-time-table-by-student-id/$studentId';
+
+  final response = await http.get(Uri.parse(url));
+  print(response.body);
+
+  if (response.statusCode == 200) {
+    List<dynamic> jsonResponse = json.decode(response.body);
+    if (jsonResponse.isNotEmpty) {
+      return jsonResponse.map((data) => Attendance.fromJson(data)).toList();
+    } else {
+      throw Exception('No attendance found');
+    }
+  } else {
+    throw Exception('Failed to load attendance');
+  }
+}
 }

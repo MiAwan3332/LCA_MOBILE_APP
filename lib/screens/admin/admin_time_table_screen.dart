@@ -18,39 +18,40 @@ class _TimetableScreenState extends State<TimetableScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFFBA8E4F),
-        title: Text(
-          'Timetable',
-          style: TextStyle(color: Colors.white),
-        ),
-        iconTheme: IconThemeData(color: Colors.white),
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      backgroundColor: Color(0xFFBA8E4F),
+      title: Text(
+        'Timetable',
+        style: TextStyle(color: Colors.white),
       ),
-      body: FutureBuilder<List<Timetable>>(
-        future: futureTimetable,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No data found'));
-          } else {
-            return ListView.builder(
-              padding: const EdgeInsets.all(16.0),
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                Timetable timetable = snapshot.data![index];
-                return TimetableCard(timetable: timetable);
-              },
-            );
-          }
-        },
-      ),
-    );
-  }
+      iconTheme: IconThemeData(color: Colors.white),
+    ),
+    body: FutureBuilder<List<Timetable>>(
+      future: futureTimetable,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return Center(child: Text('No timetable data available'));
+        } else {
+          return ListView.builder(
+            padding: const EdgeInsets.all(16.0),
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) {
+              Timetable timetable = snapshot.data![index];
+              return TimetableCard(timetable: timetable);
+            },
+          );
+        }
+      },
+    ),
+  );
+}
+
 }
 
 class TimetableCard extends StatelessWidget {

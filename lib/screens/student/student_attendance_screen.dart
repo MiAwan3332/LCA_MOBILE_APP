@@ -3,12 +3,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../services/time_table_services.dart';
 import '../../models/time_table_model.dart';
 
-class StudentTimeTableScreen extends StatefulWidget {
+class StudentAttendanceScreen extends StatefulWidget {
   @override
-  _TimetableScreenState createState() => _TimetableScreenState();
+  _StudentAttendanceScreenState createState() => _StudentAttendanceScreenState();
 }
 
-class _TimetableScreenState extends State<StudentTimeTableScreen> {
+class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
   Future<List<Timetable>>? futureTimetable;
 
   @override
@@ -38,7 +38,7 @@ class _TimetableScreenState extends State<StudentTimeTableScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFFBA8E4F),
-        title: Text('Student Timetable', style: TextStyle(color: Colors.white)),
+        title: Text('Attendance', style: TextStyle(color: Colors.white)),
         iconTheme: IconThemeData(color: Colors.white),
       ),
       body: FutureBuilder<List<Timetable>>(

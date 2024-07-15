@@ -41,8 +41,6 @@ class Batch {
   final List<String> courses;
   final List<String> teachers;
   final int version;
-  final String batchFee;
-  final String batchType;
 
   Batch({
     required this.id,
@@ -53,8 +51,6 @@ class Batch {
     required this.courses,
     required this.teachers,
     required this.version,
-    required this.batchFee,
-    required this.batchType,
   });
 
   factory Batch.fromJson(Map<String, dynamic> json) {
@@ -67,8 +63,6 @@ class Batch {
       courses: List<String>.from(json['courses']),
       teachers: List<String>.from(json['teachers']),
       version: json['__v'],
-      batchFee: json['batch_fee'],
-      batchType: json['batch_type'],
     );
   }
 }
@@ -78,12 +72,14 @@ class Course {
   final String name;
   final String description;
   final int version;
+  final int fee;
 
   Course({
     required this.id,
     required this.name,
     required this.description,
     required this.version,
+    required this.fee,
   });
 
   factory Course.fromJson(Map<String, dynamic> json) {
@@ -91,6 +87,7 @@ class Course {
       id: json['_id'],
       name: json['name'],
       description: json['description'],
+      fee: json['fee'],
       version: json['__v'],
     );
   }
