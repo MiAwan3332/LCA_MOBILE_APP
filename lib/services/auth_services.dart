@@ -37,12 +37,14 @@ class UserAuth {
         await prefs.setString('token', token);
         String role = responseData['role'];
         await prefs.setString('role', role);
+        String name = responseData['studentData']['name'];
+        await prefs.setString('name', name);
         await prefs.setInt(
             'timestamp_role', DateTime.now().millisecondsSinceEpoch);
             print(responseData['role']);
 
         if (role == 'student') {
-            String studentId = responseData['studentId'];
+            String studentId = responseData['studentData']['_id'];
           await prefs.setString('studentId', studentId);
           _student.checkFormStatus(token, studentId, context);
           Navigator.push(

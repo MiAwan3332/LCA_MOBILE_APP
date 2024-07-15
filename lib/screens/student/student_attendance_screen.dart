@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lca_app/models/student_attendance_model.dart';
+import 'package:lca_app/services/attendence_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../services/time_table_services.dart';
 import '../../models/time_table_model.dart';
@@ -9,7 +11,7 @@ class StudentAttendanceScreen extends StatefulWidget {
 }
 
 class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
-  Future<List<Timetable>>? futureTimetable;
+  Future<List<Attendance>>? futureAttendance;
 
   @override
   void initState() {
@@ -22,12 +24,12 @@ class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
     String? studentId = prefs.getString('studentId');
     if (studentId != null) {
       setState(() {
-        futureTimetable =
-            TimeTableServices().fetchStudentTimetableById(studentId);
+        futureAttendance =
+            AttendenceServices().fetchStudentAttendanceById(studentId);
       });
     } else {
       setState(() {
-        futureTimetable =
+        futureAttendance =
             Future.error('No student ID found in shared preferences');
       });
     }
@@ -41,8 +43,8 @@ class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
         title: Text('Attendance', style: TextStyle(color: Colors.white)),
         iconTheme: IconThemeData(color: Colors.white),
       ),
-      body: FutureBuilder<List<Timetable>>(
-        future: futureTimetable,
+      body: FutureBuilder<List<Attendance>>(
+        future: futureAttendance,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -54,7 +56,7 @@ class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
             return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                Timetable timetable = snapshot.data![index];
+                Attendance attendance = snapshot.data![index];
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
@@ -63,19 +65,19 @@ class _StudentAttendanceScreenState extends State<StudentAttendanceScreen> {
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(timetable.course.name),
+                          Text(attendance.course.name),
                           SizedBox(width: 10),
-                          Text(timetable.day),
+                          Text(attendance.status),
                         ],
                       ),
-                      subtitle: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('${timetable.teacher.name}'),
-                          Text(
-                              '${timetable.startTime} - ${timetable.endTime}'),
-                        ],
-                      ),
+                      // subtitle: Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: [
+                      //     Text('${timetable.teacher.name}'),
+                      //     Text(
+                      //         '${timetable.startTime} - ${timetable.endTime}'),
+                      //   ],
+                      // ),
                     ),
                   ),
                 );

@@ -48,7 +48,7 @@ class AttendenceServices{
 
   Future<List<Attendance>> fetchStudentAttendanceById(String studentId) async {
   String url =
-      'https://lca-system-backend.vercel.app/timetable/get-time-table-by-student-id/$studentId';
+      'https://lca-system-backend.vercel.app/attendence/studentAttendence/$studentId';
 
   final response = await http.get(Uri.parse(url));
   print(response.body);

@@ -12,82 +12,40 @@ class StudentProfileScreen extends StatefulWidget {
 
 class _StudentProfileScreenState extends State<StudentProfileScreen> {
   List<dynamic> seminars = [];
+  String? name;
 
   @override
   void initState() {
     super.initState();
-    fetchData();
+    getdatafromsharedpreference();
   }
 
-  Future<void> fetchData() async {
+  Future<void> getdatafromsharedpreference() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? authToken = prefs.getString('token');
-
-    final String apiUrl = 'https://lca-system-backend.vercel.app/seminars';
-
-    try {
-      final response = await http.get(
-        Uri.parse(apiUrl),
-        headers: {
-          'Authorization': 'Bearer $authToken', 
-          'Content-Type': 'application/json',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        setState(() {
-          seminars = responseData; 
-        });
-      } else {
-        print('Request failed with status: ${response.statusCode}');
-        print('Response: ${response.body}');
-      }
-    } catch (error) {
-      print('Error fetching data: $error');
-    }
-  }
-
-  void _openQRScanner(String seminarName) {
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => QRScannerScreen(),
-    //   ),
-    // );
+    name = prefs.getString('name');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile', style: TextStyle(color: Colors.white),),
+        title: Text(
+          'Profile',
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: Color(0xFFBA8E4F),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: ListView.builder(
-          itemCount: seminars.length,
-          itemBuilder: (context, index) {
-            final seminar = seminars[index];
-            return Card(
-              child: ListTile(
-                title: Text(seminar['name'] ?? ''),
-                subtitle: Text(seminar['email'] ?? ''),
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) =>
-                  //         SeminarFormScreen(seminarId: seminar['_id']),
-                  //   ),
-                  // );
-                },
-              ),
-            );
-          },
-        ),
-      ),
+      body: Column(
+        children: [
+          Row(children: [
+            Text('Name: ',),
+            Text(
+              name!,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            )
+          ],),
+        ],
+      )
     );
   }
 }
