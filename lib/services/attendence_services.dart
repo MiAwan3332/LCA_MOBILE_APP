@@ -5,20 +5,22 @@ import 'package:lca_app/models/student_attendance_model.dart';
 import './../services/generic_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AttendenceServices{
+class AttendenceServices {
   final GenericServices _genericServices = GenericServices();
-   Future<void> attendenceFunction(String? studentId, BuildContext context) async {
-     SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token =  await prefs.getString('token');
+  Future<void> attendenceFunction(
+      String? studentId, BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = await prefs.getString('token');
 
-    final url = Uri.parse('https://lca-system-backend.vercel.app/attendence/create');
+    final url =
+        Uri.parse('https://lca-system-backend.vercel.app/attendence/create');
 
     Map<String, dynamic> body = {
-      'student_id': '665b9fae69f73f899ad7b862'
+      'student_id': studentId
+      // 'student_id': 
     };
 
     String jsonBody = json.encode(body);
-    
 
     Map<String, String> headers = {
       'Content-Type': 'application/json',
@@ -28,17 +30,17 @@ class AttendenceServices{
 
     try {
       final response = await http.post(url, headers: headers, body: jsonBody);
-      print('Response status: ${response.body}');
 
       if (response.statusCode == 200) {
+        var decodedResponse = jsonDecode(response.body);
 
-        _genericServices.showCustomToast('Student has been marked as present', Colors.green);
-        print('abc');
-        print('Student has been marked as present');
-        print('xyz');
-      }  else {
-       _genericServices.showCustomToast('Student has been marked as absent', Colors.red);
-       print('Student has been marked as absent');
+        _genericServices.showCustomToast(
+            (decodedResponse['message']), Colors.green);
+      } else {
+        var decodedResponse = jsonDecode(response.body);
+
+        _genericServices.showCustomToast(
+            (decodedResponse['message']), Colors.red);
       }
     } catch (e) {
       print('Error: $e');
@@ -47,21 +49,21 @@ class AttendenceServices{
   }
 
   Future<List<Attendance>> fetchStudentAttendanceById(String studentId) async {
-  String url =
-      'https://lca-system-backend.vercel.app/attendence/studentAttendence/$studentId';
+    String url =
+        'https://lca-system-backend.vercel.app/attendence/studentAttendence/$studentId';
 
-  final response = await http.get(Uri.parse(url));
-  print(response.body);
+    final response = await http.get(Uri.parse(url));
+    print(response.body);
 
-  if (response.statusCode == 200) {
-    List<dynamic> jsonResponse = json.decode(response.body);
-    if (jsonResponse.isNotEmpty) {
-      return jsonResponse.map((data) => Attendance.fromJson(data)).toList();
+    if (response.statusCode == 200) {
+      List<dynamic> jsonResponse = json.decode(response.body);
+      if (jsonResponse.isNotEmpty) {
+        return jsonResponse.map((data) => Attendance.fromJson(data)).toList();
+      } else {
+        throw Exception('No attendance found');
+      }
     } else {
-      throw Exception('No attendance found');
+      throw Exception('Failed to load attendance');
     }
-  } else {
-    throw Exception('Failed to load attendance');
   }
-}
 }

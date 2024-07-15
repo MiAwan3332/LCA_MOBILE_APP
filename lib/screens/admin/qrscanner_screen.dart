@@ -34,11 +34,10 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // https://lca-system-backend.vercel.app
     if (result != null) {
-      _attendenceServices.attendenceFunction(result!.code, context);
+      AttendenceServices().attendenceFunction(result!.code, context);
     } else if (result == null) {
-      _genericServices.showCustomToast('Invalid Student', Colors.red);
+      _genericServices.showCustomToast('Invalid Code', Colors.red);
     } else {
       _genericServices.showCustomToast('Error occurred', Colors.red);
     }
@@ -99,6 +98,26 @@ class _QRScannerScreenState extends State<QRScannerScreen> {
                                   TextStyle(fontSize: 10, color: Colors.white)),
                         ),
                       ),
+                      // Container(
+                      //   height: 20,
+                      //   margin: const EdgeInsets.all(8),
+                      //   child: ElevatedButton(
+                      //     onPressed: () {
+
+                      //     },
+                      //     style: ElevatedButton.styleFrom(
+                      //       backgroundColor: Color(
+                      //           0xFFBA8E4F), // Change background color here
+                      //       shape: RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.circular(
+                      //             10.0), // Change border radius here
+                      //       ),
+                      //     ),
+                      //     child: const Text('Debug',
+                      //         style:
+                      //             TextStyle(fontSize: 10, color: Colors.white)),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ],
