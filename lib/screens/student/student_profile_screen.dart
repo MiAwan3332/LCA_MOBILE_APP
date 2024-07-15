@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-// import 'qrscanner_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import './seminarform_screen.dart';
 
 class StudentProfileScreen extends StatefulWidget {
   @override
@@ -11,8 +7,8 @@ class StudentProfileScreen extends StatefulWidget {
 }
 
 class _StudentProfileScreenState extends State<StudentProfileScreen> {
-  List<dynamic> seminars = [];
   String? name;
+  String? role;
 
   @override
   void initState() {
@@ -22,7 +18,10 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
 
   Future<void> getdatafromsharedpreference() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    name = prefs.getString('name');
+    setState(() {
+      name = prefs.getString('name');
+      role = prefs.getString("role");
+    });
   }
 
   @override
@@ -31,21 +30,63 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
       appBar: AppBar(
         title: Text(
           'Profile',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: 22),
         ),
         backgroundColor: Color(0xFFBA8E4F),
+        iconTheme: IconThemeData(color: Colors.white),// Dark brown background
+        elevation: 0, // Remove elevation
+        
       ),
-      body: Column(
-        children: [
-          Row(children: [
-            Text('Name: ',),
-            Text(
-              name!,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            )
-          ],),
+       // Light beige background
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildProfileRow('Name:', name),
+            SizedBox(height: 16),
+            _buildProfileRow('Role:', role),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProfileRow(String label, String? value) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      decoration: BoxDecoration(
+        color: Color(0xFF6D4C41),
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
         ],
-      )
+      ),
+      child: Row(
+        children: [
+          Text(
+            label,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+          SizedBox(width: 8),
+          Expanded(
+            child: value != null
+                ? Text(
+                    value,
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                  )
+                : Center(
+                    child: CircularProgressIndicator(),
+                  ),
+          ),
+        ],
+      ),
     );
   }
 }
