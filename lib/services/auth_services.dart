@@ -6,7 +6,7 @@ import 'package:lca_app/screens/student/student_info_form_screen.dart';
 import 'package:lca_app/services/student_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/admin/dashboard_screen.dart';
-import '../models/student_profile_model.dart';
+import '../models/student_detail_model.dart';
 
 class UserAuth {
   final Student _student = Student();

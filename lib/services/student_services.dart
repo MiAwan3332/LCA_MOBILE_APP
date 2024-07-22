@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lca_app/screens/student/student_dashboard_screen.dart';
 import 'package:lca_app/screens/student/student_info_form_screen.dart';
+import 'package:lca_app/services/generic_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../models/student_detail_model.dart';
 import '../screens/admin/dashboard_screen.dart';
 
 class Student {
+
+  final GenericServices _genericServices = GenericServices();
   Future<void> submitStudentInfo(
     String cnic,
     String city,
@@ -128,5 +132,41 @@ class Student {
     }
   }
 
-  
+  Future<StudentDetail?> fetchStudentDetails(String studentId, BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = await prefs.getString('token');
+
+    final url = Uri.parse('https://lca-system-backend.vercel.app/students/$studentId');
+
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    try {
+      final response = await http.get(url, headers: headers);
+
+      if (response.statusCode == 200) {
+        var decodedResponse = jsonDecode(response.body);
+        StudentDetail studentDetail = StudentDetail.fromJson(decodedResponse);
+
+        // _genericServices.showCustomToast(
+        //     (decodedResponse['message'] ?? 'Student details fetched successfully'),
+        //     Colors.green);
+
+        return studentDetail;
+      } else {
+        var decodedResponse = jsonDecode(response.body);
+        _genericServices.showCustomToast(
+            (decodedResponse['message'] ?? 'Failed to fetch student details'),
+            Colors.red);
+        return null;
+      }
+    } catch (e) {
+      print('Error: $e');
+      _genericServices.showCustomToast('An error occurred: $e', Colors.red);
+      return null;
+    }
+  }
 }

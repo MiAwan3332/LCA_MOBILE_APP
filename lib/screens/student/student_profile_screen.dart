@@ -29,7 +29,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Profile',
+          'Fee Detail',
           style: TextStyle(color: Colors.white, fontSize: 22),
         ),
         backgroundColor: Color(0xFFBA8E4F),
@@ -46,6 +46,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
             _buildProfileRow('Name:', name),
             SizedBox(height: 16),
             _buildProfileRow('Role:', role),
+            
           ],
         ),
       ),

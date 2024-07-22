@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:lca_app/change_password_screen.dart';
 import 'package:lca_app/screens/student/student_attendance_screen.dart';
+import 'package:lca_app/screens/student/student_fee_details_screen.dart';
 import 'package:lca_app/screens/student/student_profile_screen.dart';
 import 'package:lca_app/screens/student/subjects_screen.dart';
 import 'package:lca_app/signin_screen.dart';
@@ -170,6 +171,39 @@ class StudentDashboardScreen extends StatelessWidget {
                         SizedBox(height: 10),
                         Text(
                           'Time Table',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => StudentFeeDetailsScreen()),
+                  );
+                },
+                child: Card(
+                  elevation: 5,
+                  child: Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.payments,
+                          size: 50,
+                          color: Colors.blueGrey,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Fee Details',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
