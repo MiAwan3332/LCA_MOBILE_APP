@@ -25,7 +25,7 @@ class AttendenceServices {
     Map<String, String> headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
+      // 'Authorization': 'Bearer $token',
     };
 
     try {
