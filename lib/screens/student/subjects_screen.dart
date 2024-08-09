@@ -23,7 +23,7 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? studentId = prefs.getString('studentId');
 
-    final String apiUrl = 'https://lca-system-backend.vercel.app/courses/student/courses/${studentId}';
+    final String apiUrl = 'https://api.lca-portal.com/courses/student/courses/${studentId}';
 
     try {
       final response = await http.get(

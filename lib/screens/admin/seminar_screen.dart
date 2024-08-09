@@ -24,7 +24,7 @@ class _SeminarScreenState extends State<SeminarScreen> {
     String? authToken = prefs.getString('token');
 
     // Replace 'your_api_endpoint' with the actual API endpoint you're using
-    final String apiUrl = 'https://lca-system-backend.vercel.app/seminars';
+    final String apiUrl = 'https://api.lca-portal.com/seminars';
 
     try {
       final response = await http.get(

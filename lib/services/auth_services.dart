@@ -12,7 +12,7 @@ class UserAuth {
   final Student _student = Student();
 
  Future<void> loginUser(String email, String password, BuildContext context) async {
-  final url = Uri.parse('https://lca-system-backend.vercel.app/users/login');
+  final url = Uri.parse('https://api.lca-portal.com/users/login');
 
   Map<String, dynamic> body = {
     'email': email,
@@ -102,7 +102,7 @@ class UserAuth {
   Future<void> changePassword(String email, String currentPassword,
       String newPassword, BuildContext context) async {
     final url =
-        Uri.parse('https://lca-system-backend.vercel.app/users/changePassword');
+        Uri.parse('https://api.lca-portal.com/users/changePassword');
 
     // Retrieve token from SharedPreferences
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -159,7 +159,7 @@ class UserAuth {
 
   Future<void> forgotPassword(String email, BuildContext context) async {
     final url =
-        Uri.parse('https://lca-system-backend.vercel.app/users/forgotPassword');
+        Uri.parse('https://api.lca-portal.com/users/forgotPassword');
 
     Map<String, dynamic> body = {
       'email': email,

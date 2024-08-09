@@ -13,7 +13,7 @@ class AttendenceServices {
     String? token = await prefs.getString('token');
 
     final url =
-        Uri.parse('https://lca-system-backend.vercel.app/attendence/create');
+        Uri.parse('https://api.lca-portal.com/attendence/create');
 
     Map<String, dynamic> body = {
       'student_id': studentId
@@ -50,7 +50,7 @@ class AttendenceServices {
 
   Future<List<Attendance>> fetchStudentAttendanceById(String studentId) async {
     String url =
-        'https://lca-system-backend.vercel.app/attendence/studentAttendence/$studentId';
+        'https://api.lca-portal.com/attendence/studentAttendence/$studentId';
 
     final response = await http.get(Uri.parse(url));
     print(response.body);

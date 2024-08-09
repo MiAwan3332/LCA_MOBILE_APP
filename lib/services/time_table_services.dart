@@ -5,7 +5,7 @@ import '../models/time_table_model.dart';
 
 class TimeTableServices {
   static const String url =
-      'https://lca-system-backend.vercel.app/timetable/today/get';
+      'https://api.lca-portal.com/timetable/today/get';
 
   static Future<List<Timetable>> fetchTimetable() async {
     try {
@@ -25,7 +25,7 @@ class TimeTableServices {
 
   Future<List<Timetable>> fetchStudentTimetableById(String studentId) async {
   String url =
-      'https://lca-system-backend.vercel.app/timetable/get-time-table-by-student-id/$studentId';
+      'https://api.lca-portal.com/timetable/get-time-table-by-student-id/$studentId';
 
   final response = await http.get(Uri.parse(url));
   print(response.body);

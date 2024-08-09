@@ -32,7 +32,7 @@ class Student {
     String? studentId = prefs.getString('studentId');
 
     final url = Uri.parse(
-        'https://lca-system-backend.vercel.app/students/studentInfoUpdate/$studentId');
+        'https://api.lca-portal.com/students/studentInfoUpdate/$studentId');
 
     if (token == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -96,7 +96,7 @@ class Student {
   Future<void> checkFormStatus(
       String token, String studentId, BuildContext context) async {
     final String apiUrl =
-        'https://lca-system-backend.vercel.app/students/checkStudentFields/${studentId}';
+        'https://api.lca-portal.com/students/checkStudentFields/${studentId}';
 
     try {
       final response = await http.get(
@@ -136,7 +136,7 @@ class Student {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = await prefs.getString('token');
 
-    final url = Uri.parse('https://lca-system-backend.vercel.app/students/$studentId');
+    final url = Uri.parse('https://api.lca-portal.com/students/$studentId');
 
     Map<String, String> headers = {
       'Content-Type': 'application/json',

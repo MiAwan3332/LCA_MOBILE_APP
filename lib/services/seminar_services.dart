@@ -15,7 +15,7 @@ class Seminar {
       BuildContext context,
       List<String> selectedSeminars) async {
         
-    final url = Uri.parse('https://lca-system-backend.vercel.app/attendees/add');
+    final url = Uri.parse('https://api.lca-portal.com/attendees/add');
     print(seminarId);
 
     // Retrieve token from SharedPreferences
